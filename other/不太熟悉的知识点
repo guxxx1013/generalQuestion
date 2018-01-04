@@ -1,0 +1,115 @@
+不太熟悉的知识点一栏：
+6、说出Servlet的生命周期，并说出Servlet和CGI的区别。
+Servlet被服务器实例化后，容器运行其init方法，请求到达时运行其service方法，service方法自动派
+遣运行与请求对应的doXXX方法（doGet，doPost）等，当服务器决定将实例销毁的时候调用其destroy方法。
+与cgi的区别在于servlet处于服务器进程中，它通过多线程方式运行其service方法，一个实例可以服务于
+多个请求，并且其实例一般不会销毁，而CGI对每个请求都产生新的进程，服务完成后就销毁，所以效率上低于servlet。
+
+8、EJB是基于哪些技术实现的？并说出SessionBean和EntityBean的区别，StatefulBean和StatelessBean的区别。
+EJB包括Session Bean、Entity Bean、Message Driven Bean，基于JNDI、RMI、JAT等技术实现。
+SessionBean在J2EE应用程序中被用来完成一些服务器端的业务操作，例如访问数据库、调用其他EJB组件。
+EntityBean被用来代表应用系统中用到的数据。
+对于客户机，SessionBean是一种非持久性对象，它实现某些在服务器上运行的业务逻辑。
+      对于客户机，EntityBean是一种持久性对象，它代表一个存储在持久性存储器中的实体的对象视图，
+      或是一个由现有企业应用程序实现的实体。
+Session Bean 还可以再细分为 Stateful Session Bean 与 Stateless Session Bean ，这两种
+的 Session Bean都可以将系统逻辑放在 method之中执行，不同的是 Stateful Session Bean 可以
+记录呼叫者的状态，因此通常来说，一个使用者会有一个相对应的 Stateful Session Bean 的实体。
+Stateless Session Bean 虽然也是逻辑组件，但是他却不负责记录使用者状态，也就是说当使用者呼叫
+Stateless Session Bean 的时候，EJB Container 并不会找寻特定的 Stateless Session Bean
+的实体来执行这个 method。换言之，很可能数个使用者在执行某个 Stateless Session Bean 的 met
+hods 时，会是同一个 Bean 的 Instance 在执行。从内存方面来看， Stateful Session Bean 与
+Stateless Session Bean 比较， Stateful Session Bean 会消耗 J2EE Server 较多的内存，
+然而 Stateful Session Bean 的优势却在于他可以维持使用者的状态。
+
+19、forward 和redirect的区别
+forward是服务器请求资源，服务器直接访问目标地址的URL，把那个URL的响应内容读取过来，然后把这些
+内容再发给浏览器，浏览器根本不知道服务器发送的内容是从哪儿来的，所以它的地址栏中还是原来的地址。
+redirect就是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址，一般来说浏览器会
+用刚才请求的所有参数重新请求，所以session,request参数都可以获取。 ，但是插入数据时只需要
+记录本项的前后项即可，所以插入速度较快
+
+20、EJB与JAVA BEAN的区别？
+Java Bean 是可复用的组件，对Java Bean并没有严格的规范，理论上讲，任何一个Java类都可以是一个Bean。但通常情况下，由于Java Bean是被容器所创建（如Tomcat）的，所以Java Bean应具有一个无参的构造器，另外，通常Java Bean还要实现Serializable接口用于实现Bean的持久性。Java Bean实际上相当于微软COM模型中的本地进程内COM组件，它是不能被跨进程访问的。Enterprise Java Bean 相当于DCOM，即分布式组件。它是基于Java的远程方法调用（RMI）技术的，所以EJB可以被远程访问（跨进程、跨计算机）。但EJB必须被布署在诸如Webspere、WebLogic这样的容器中，EJB客户从不直接访问真正的EJB组件，而是通过其容器访问。EJB容器是EJB组件的代理，EJB组件由容器所创建和管理。客户通过容器来访问真正的EJB组件。
+
+22、JSP中动态INCLUDE与静态INCLUDE的区别？
+动态INCLUDE用jsp:include动作实现 <jsp:include page="included.jsp" flush="true" />它总是会检查所含文件中的变化，适合用于包含动态页面，并且可以带参数。
+静态INCLUDE用include伪码实现,定不会检查所含文件的变化，适用于包含静态页面<%@ include file="included.htm" %>
+
+25、short s1 = 1; s1 = s1 + 1;有什么错? short s1 = 1; s1 += 1;有什么错?
+      short s1 = 1; s1 = s1 + 1; （s1+1运算结果是int型，需要强制转换类型）
+      short s1 = 1; s1 += 1;（可以正确编译）
+
+      28、设计4个线程，其中两个线程每次对j增加1，另外两个线程对j每次减少1。写出程序。
+      以下程序使用内部类实现线程，对j增减的时候没有考虑顺序问题。
+      public class ThreadTest1{
+        private int j;
+        public static void main(String args[]){
+      ThreadTest1 tt=new ThreadTest1();
+      Inc inc=tt.new Inc();
+      Dec dec=tt.new Dec();
+      for(int i=0;i<2;i++){
+      Thread t=new Thread(inc);
+      t.start();
+      t=new Thread(dec);
+      t.start();
+      }
+      }
+        private synchronized void inc(){
+      j++;
+      System.out.println(Thread.currentThread().getName()+"-inc:"+j);
+        }
+        private synchronized void dec(){
+      j--;
+      System.out.println(Thread.currentThread().getName()+"-dec:"+j);
+        }
+        class Inc implements Runnable{
+      public void run(){
+      for(int i=0;i<100;i++){
+      inc();
+      }
+      }
+        }
+        class Dec implements Runnable{
+      public void run(){
+      for(int i=0;i<100;i++){
+      dec();
+      }
+       }
+        }
+      }
+29、Java有没有goto?
+java中的保留字，现在没有在java中使用。
+
+31、EJB包括（SessionBean,EntityBean）说出他们的生命周期，及如何管理事务的？
+SessionBean：Stateless Session Bean 的生命周期是由容器决定的，当客户机发出请求要建立一个
+Bean的实例时，EJB容器不一定要创建一个新的Bean的实例供客户机调用，而是随便找一个现有的实例提供
+给客户机。当客户机第一次调用一个Stateful Session Bean 时，容器必须立即在服务器中创建一个新的
+Bean实例，并关联到客户机上，以后此客户机调用Stateful Session Bean 的方法时容器会把调用分派
+到与此客户机相关联的Bean实例。
+EntityBean：Entity Beans能存活相对较长的时间，并且状态是持续的。
+只要数据库中的数据存在，Entity beans就一直存活。而不是按照应用程序或者服务进程来说的。即使EJB
+容器崩溃了，Entity beans也是存活的。Entity Beans生命周期能够被容器或者 Beans自己管理。
+EJB通过以下技术管理实务：对象管理组织（OMG）的对象实务服务（OTS），
+Sun Microsystems的Transaction Service（JTS）、Java Transaction API（JTA），
+开发组（X/Open）的XA接口。
+
+32、应用服务器有那些？
+BEA WebLogic Server，IBM WebSphere Application Server，Oracle9i Application
+Server，jBoss，Tomcat
+
+34、接口是否可继承接口? 抽象类是否可实现(implements)接口? 抽象类是否可继承实体类(concrete class)?
+接口可以继承接口。抽象类可以实现(implements)接口，抽象类是否可继承实体类，但前提是实体类必须有明确的构造函数
+
+35、List, Set, Map是否继承自Collection接口?
+    List，Set是，Map不是
+
+36、说出数据连接池的工作机制是什么?
+    J2EE服务器启动时会建立一定数量的池连接，并一直维持不少于此数目的池连接。客户端程序需要连接时，
+    池驱动程序会返回一个未使用的池连接并将其表记为忙。如果当前没有空闲连接，池驱动程序就新建一定数
+    量的连接，新建连接的数量有配置参数决定。当使用的池连接调用完成后，池驱动程序将此连接表记为空闲，
+    其他调用就可以使用这个连接。
+
+37、abstract的method是否可同时是static,是否可同时是native，是否可同时是synchronized?
+        都不能
+可以将native方法比作Java程序同C程序的接口.
