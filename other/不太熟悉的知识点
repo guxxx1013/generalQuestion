@@ -101,8 +101,7 @@ Server，jBoss，Tomcat
 34、接口是否可继承接口? 抽象类是否可实现(implements)接口? 抽象类是否可继承实体类(concrete class)?
 接口可以继承接口。抽象类可以实现(implements)接口，抽象类是否可继承实体类，但前提是实体类必须有明确的构造函数
 
-35、List, Set, Map是否继承自Collection接口?
-    List，Set是，Map不是
+
 
 36、说出数据连接池的工作机制是什么?
     J2EE服务器启动时会建立一定数量的池连接，并一直维持不少于此数目的池连接。客户端程序需要连接时，
@@ -113,3 +112,206 @@ Server，jBoss，Tomcat
 37、abstract的method是否可同时是static,是否可同时是native，是否可同时是synchronized?
         都不能
 可以将native方法比作Java程序同C程序的接口.
+
+52、请说出你所知道的线程同步的方法。
+wait():使一个线程处于等待状态，并且释放所持有的对象的lock。
+sleep():使一个正在运行的线程处于睡眠状态，是一个静态方法，调用此方法要捕捉InterruptedException异常。
+notify():唤醒一个处于等待状态的线程，注意的是在调用此方法的时候，并不能确切的唤醒某一个等待状态的线程，而是由JVM确定唤醒哪个线程，而且不是按优先级。
+Allnotity():唤醒所有处入等待状态的线程，注意并不是给所有唤醒线程一个对象的锁，而是让它们竞争。
+
+54、描述一下JVM加载class文件的原理机制?
+JVM中类的装载是由ClassLoader和它的子类来实现的,Java ClassLoader 是一个重要的Java运行时系
+统组件。它负责在运行时查找和装入类文件的类。
+
+56、多线程有几种实现方法,都是什么?同步有几种实现方法,都是什么?
+多线程有两种实现方法，分别是继承Thread类与实现Runnable接口
+同步的实现方面有两种，分别是synchronized,wait与notify
+
+58、线程的基本概念、线程的基本状态以及状态之间的关系
+线程指在程序执行过程中，能够执行程序代码的一个执行单位，每个程序至少都有一个线程，也就是程序本身。
+Java中的线程有四种状态分别是：运行、就绪、挂起、结束。
+
+59、JSP的常用指令
+<%@page language="java" contenType="text/html;charset=gb2312" session="true" buffer="64kb" isThreadSafe="true" info="text" errorPage="error.jsp" isErrorPage="true" isELIgnored="true" pageEncoding="gb2312" import="java.sql.*"%>
+isErrorPage(是否能使用Exception对象)，isELIgnored(是否忽略表达式)
+<%@include file="filename"%>
+<%@taglib prefix="c"uri="http://www.360doc.com/content/08/0429/19/‘‘http://......"%/‘‘>
+
+60、什么情况下调用doGet()和doPost()？
+Jsp页面中的form标签里的method属性为get时调用doGet()，为post时调用doPost()。
+
+61、servlet的生命周期
+web容器加载servlet，生命周期开始。通过调用servlet的init()方法进行servlet的初始化。通过调用service()方法实现，根据请求的不同调用不同的do***()方法。结束服务，web容器调用servlet的destroy()方法。
+
+62、如何现实servlet的单线程模式
+<%@ page isThreadSafe="false"%>
+
+63、页面间对象传递的方法
+request，session，application，cookie等
+
+64、JSP和Servlet有哪些相同点和不同点，他们之间的联系是什么？
+JSP是Servlet技术的扩展，本质上是Servlet的简易方式，更强调应用的外表表达。JSP编译后是"类servlet"。
+Servlet和JSP最主要的不同点在于，Servlet的应用逻辑是在Java文件中，并且完全从表示层中的HTML里分离开来。
+而JSP的情况是Java和HTML可以组合成一个扩展名为.jsp的文件。JSP侧重于视图，Servlet主要用于控制逻辑
+
+65、四种会话跟踪技术
+会话作用域ServletsJSP 页面描述
+page否是代表与一个页面相关的对象和属性。一个页面由一个编译好的 Java servlet 类（可以带有任何的 include 指令，但是没有 include 动作）表示。这既包括 servlet 又包括被编译成 servlet 的 JSP 页面
+request是是代表与 Web 客户机发出的一个请求相关的对象和属性。一个请求可能跨越多个页面，涉及多个 Web 组件（由于 forward 指令和 include 动作的关系）
+session是是代表与用于某个 Web 客户机的一个用户体验相关的对象和属性。一个 Web 会话可以也经常会跨越多个客户机请求
+application是是代表与整个 Web 应用程序相关的对象和属性。这实质上是跨越整个 Web 应用程序，包括多个页面、请求和会话的一个全局作用域
+
+66、Request对象的主要方法：
+setAttribute(String name,Object)：设置名字为name的request的参数值
+getAttribute(String name)：返回由name指定的属性值
+getAttributeNames()：返回request对象所有属性的名字集合，结果是一个枚举的实例
+getCookies()：返回客户端的所有Cookie对象，结果是一个Cookie数组
+getCharacterEncoding()：返回请求中的字符编码方式
+getContentLength()：返回请求的Body的长度
+getHeader(String name)：获得HTTP协议定义的文件头信息
+getHeaders(String name)：返回指定名字的request Header的所有值，结果是一个枚举的实例
+getHeaderNames()：返回所以request Header的名字，结果是一个枚举的实例
+getInputStream()：返回请求的输入流，用于获得请求中的数据
+getMethod()：获得客户端向服务器端传送数据的方法
+getParameter(String name)：获得客户端传送给服务器端的有name指定的参数值
+getParameterNames()：获得客户端传送给服务器端的所有参数的名字，结果是一个枚举的实例
+getParameterValues(String name)：获得有name指定的参数的所有值
+getProtocol()：获取客户端向服务器端传送数据所依据的协议名称
+getQueryString()：获得查询字符串
+getRequestURI()：获取发出请求字符串的客户端地址
+getRemoteAddr()：获取客户端的IP地址
+getRemoteHost()：获取客户端的名字
+getSession([Boolean create])：返回和请求相关Session
+getServerName()：获取服务器的名字
+getServletPath()：获取客户端所请求的脚本文件的路径
+getServerPort()：获取服务器的端口号
+removeAttribute(String name)：删除请求中的一个属性
+
+67、J2EE是技术还是平台还是框架？
+    J2EE本身是一个标准，一个为企业分布式应用的开发提供的标准平台。
+    J2EE也是一个框架，包括JDBC、JNDI、RMI、JMS、EJB、JTA等技术
+
+68、我们在web应用开发过程中经常遇到输出某种编码的字符，如iso8859-1等，如何输出一个某种编码的字符串？
+    Public String translate (String str) {
+        String tempStr = "";
+        try {
+          tempStr = new String(str.getBytes("ISO-8859-1"), "GBK");
+          tempStr = tempStr.trim();
+        }
+        catch (Exception e) {
+          System.err.println(e.getMessage());
+        }
+        return tempStr;
+      }
+69、简述逻辑操作(&,|,^)与条件操作(&&,||)的区别。
+  区别主要答两点：a.条件操作只能操作布尔型的,而逻辑操作不仅可以操作布尔型,而且可以操作数值型
+                b.逻辑操作不会产生短路
+
+!!!!!!!!70、XML文档定义有几种形式？它们之间有何本质区别？解析XML文档有哪几种方式？
+    a: 两种形式 dtd  schema，
+    b: 本质区别:schema本身是xml的，可以被XML解析器解析(这也是从DTD上发展schema的根本目的)，
+    c:有DOM,SAX,STAX等
+    DOM:处理大型文件时其性能下降的非常厉害。这个问题是由DOM的树结构所造成的，这种结构占用的内存较多，而且DOM必须在解析文件之前把整个文档装入内存,适合对XML的随机访问
+    SAX:不现于DOM,SAX是事件驱动型的XML解析方式。它顺序读取XML文件，不需要一次全部装载整个文件。当遇到像文件开头，文档结束，或者标签开头与标签结束时，它会触发一个事件，用户通过在其回调事件中写入处理代码来处理XML文件，适合对XML的顺序访问
+    STAX:Streaming API for XML (StAX)
+
+    72、EJB的角色和三个对象
+    一个完整的基于EJB的分布式计算结构由六个角色组成，这六个角色可以由不同的开发商提供，每个角色所作的工作必须遵循Sun公司提供的EJB规范，以保证彼此之间的兼容性。这六个角色分别是EJB组件开发者（Enterprise Bean Provider） 、应用组合者（Application Assembler）、部署者（Deployer）、EJB 服务器提供者（EJB Server Provider）、EJB 容器提供者（EJB Container Provider）、系统管理员（System Administrator）
+    三个对象是Remote（Local）接口、Home（LocalHome）接口，Bean类
+    73、EJB容器提供的服务
+    主要提供生命周期管理、代码产生、持续性管理、安全、事务管理、锁和并发行管理等服务。
+    74、EJB规范规定EJB中禁止的操作有哪些？
+        1.不能操作线程和线程API(线程API指非线程对象的方法如notify,wait等)，2.不能操作awt，3.不能实现服务器功能，4.不能对静态属生存取，5.不能使用IO操作直接存取文件系统，6.不能加载本地库.，7.不能将this作为变量和返回，8.不能循环调用。
+        75、remote接口和home接口主要作用
+        remote接口定义了业务方法，用于EJB客户端调用业务方法。
+        home接口是EJB工厂用于创建和移除查找EJB实例
+        76、bean 实例的生命周期
+        对于Stateless Session Bean、Entity Bean、Message Driven Bean一般存在缓冲池管理，而对于Entity Bean和Statefull Session Bean存在Cache管理，通常包含创建实例，设置上下文、创建EJB Object（create）、业务方法调用、remove等过程，对于存在缓冲池管理的Bean，在create之后实例并不从内存清除，而是采用缓冲池调度机制不断重用实例，
+        而对于存在Cache管理的Bean则通过激活和去激活机制保持Bean的状态并限制内存中实例数量。
+        77、EJB的激活机制
+        以Stateful Session Bean 为例：其Cache大小决定了内存中可以同时存在的Bean实例的数量，根据MRU或NRU算法，实例在激活和去激活状态之间迁移，激活机制是当客户端调用某个EJB实例业务方法时，如果对应EJB Object发现自己没有绑定对应的Bean实例则从其去激活Bean存储中（通过序列化机制存储实例）回复（激活）此实例。状态变迁前会调用对应的ejbActive和ejbPassivate方法。
+        78、EJB的几种类型
+        会话（Session）Bean ，实体（Entity）Bean 消息驱动的（Message Driven）Bean
+        会话Bean又可分为有状态（Stateful）和无状态（Stateless）两种
+        实体Bean可分为Bean管理的持续性（BMP）和容器管理的持续性（CMP）两种
+        79、客服端调用EJB对象的几个基本步骤
+        设置JNDI服务工厂以及JNDI服务地址系统属性，查找Home接口，从Home接口调用Create方法创建Remote接口，通过Remote接口调用其业务方法。
+        80、如何给weblogic指定大小的内存?
+        在启动Weblogic的脚本中（位于所在Domian对应服务器目录下的startServerName），增加set MEM_ARGS=-Xms32m -Xmx200m，可以调整最小内存为32M，最大200M
+        81、如何设定的weblogic的热启动模式(开发模式)与产品发布模式?
+        可以在管理控制台中修改对应服务器的启动模式为开发或产品模式之一。或者修改服务的启动文件或者commenv文件，增加set PRODUCTION_MODE=true。
+        82、如何启动时不需输入用户名与密码?
+        修改服务启动文件，增加 WLS_USER和WLS_PW项。也可以在boot.properties文件中增加加密过的用户名和密码.
+        83、在weblogic管理制台中对一个应用域(或者说是一个网站,Domain)进行jms及ejb或连接池等相关信息进行配置后,实际保存在什么文件中?
+        保存在此Domain的config.xml文件中，它是服务器的核心配置文件。
+        84、说说weblogic中一个Domain的缺省目录结构?比如要将一个简单的helloWorld.jsp放入何目录下,然的在浏览器上就可打入http://主机:端口号//helloword.jsp就可以看到运行结果了? 又比如这其中用到了一个自己写的javaBean该如何办?
+        Domain目录服务器目录applications，将应用目录放在此目录下将可以作为应用访问，如果是Web应用，应用目录需要满足Web应用目录要求，jsp文件可以直接放在应用目录中，Javabean需要放在应用目录的WEB-INF目录的classes目录中，设置服务器的缺省应用将可以实现在浏览器上无需输入应用名。
+        85、在weblogic中发布ejb需涉及到哪些配置文件
+        不同类型的EJB涉及的配置文件不同，都涉及到的配置文件包括ejb-jar.xml,weblogic-ejb-jar.xmlCMP实体Bean一般还需要weblogic-cmp-rdbms-jar.xml
+        86、如何在weblogic中进行ssl配置与客户端的认证配置或说说j2ee(标准)进行ssl的配置
+        缺省安装中使用DemoIdentity.jks和DemoTrust.jks  KeyStore实现SSL，需要配置服务器使用Enable SSL，配置其端口，在产品模式下需要从CA获取私有密钥和数字证书，创建identity和trust keystore，装载获得的密钥和数字证书。可以配置此SSL连接是单向还是双向的。
+        87、如何查看在weblogic中已经发布的EJB?
+        可以使用管理控制台，在它的Deployment中可以查看所有已发布的EJB
+        88、CORBA是什么?用途是什么?
+        CORBA 标准是公共对象请求代理结构(Common Object Request Broker Architecture)，由对象管理组织 (Object Management Group，缩写为 OMG)标准化。它的组成是接口定义语言(IDL), 语言绑定(binding:也译为联编)和允许应用程序间互操作的协议。 其目的为：用不同的程序设计语言书写在不同的进程中运行，为不同的操作系统开发。
+        89、说说你所熟悉或听说过的j2ee中的几种常用模式?及对设计模式的一些看法
+          Session Facade Pattern：使用SessionBean访问EntityBean
+        Message Facade Pattern：实现异步调用
+        EJB Command Pattern：使用Command JavaBeans取代SessionBean，
+        实现轻量级访问
+        Data Transfer Object Factory：通过DTO Factory简化EntityBean数据提供特性
+        Generic Attribute Access：通过AttibuteAccess接口简化EntityBean数据提供特性
+        Business Interface：通过远程（本地）接口和Bean类实现相同接口规范业务逻辑一致性
+        ＥＪＢ架构的设计好坏将直接影响系统的性能、可扩展性、可维护性、组件可重用性及开发效率。项目越复杂，项目队伍越庞大则越能体现良好设计的重要性。
+        90、说说在weblogic中开发消息Bean时的persistent与non-persisten的差别
+        persistent方式的MDB可以保证消息传递的可靠性,也就是如果EJB容器出现问题而JMS服务器依然会将消息在此MDB可用的时候发送过来，而non－persistent方式的消息将被丢弃。
+
+        91、Servlet执行时一般实现哪几个方法？
+        public void init(ServletConfig config)
+        public ServletConfig getServletConfig()
+        public String getServletInfo()
+        public void service(ServletRequest request,ServletResponse response)
+        public void destroy()
+
+93、EJB需直接实现它的业务接口或Home接口吗，请简述理由。
+远程接口和Home接口不需要直接实现，他们的实现代码是由服务器产生的，程序运行中对应实现类会作为对
+应接口类型的实例被使用。
+
+95、请对以下在J2EE中常用的名词进行解释(或简单描述)
+web容器：给处于其中的应用程序组件（JSP，SERVLET）提供一个环境，使JSP,SERVLET直接更容器中的环境变量接口交互，不必关注其它系统问题。主要有WEB服务器来实现。例如：TOMCAT,WEBLOGIC,WEBSPHERE等。该容器提供的接口严格遵守J2EE规范中的WEB APPLICATION 标准。我们把遵守以上标准的WEB服务器就叫做J2EE中的WEB容器。
+EJB容器：Enterprise java bean 容器。更具有行业领域特色。他提供给运行在其中的组件EJB各种管理功能。只要满足J2EE规范的EJB放入该容器，马上就会被容器进行高效率的管理。并且可以通过现成的接口来获得系统级别的服务。例如邮件服务、事务管理。
+JNDI：（Java Naming & Directory Interface）JAVA命名目录服务。主要提供的功能是：提供一个目录系统，让其它各地的应用程序在其上面留下自己的索引，从而满足快速查找和定位分布式应用程序的功能。
+JMS：（Java Message Service）JAVA消息服务。主要实现各个应用程序之间的通讯。包括点对点和广播。
+JTA：（Java Transaction API）JAVA事务服务。提供各种分布式事务服务。应用程序只需调用其提供的接口即可。
+JAF：（Java Action FrameWork）JAVA安全认证框架。提供一些安全控制方面的框架。让开发者通过各种部署和自定义实现自己的个性安全控制策略。
+RMI/IIOP:（Remote Method Invocation /internet对象请求中介协议）他们主要用于通过远程调用服务。例如，远程有一台计算机上运行一个程序，它提供股票分析服务，我们可以在本地计算机上实现对其直接调用。当然这是要通过一定的规范才能在异构的系统之间进行通信。RMI是JAVA特有的。
+98、MVC的各个部分都有那些技术来实现?如何实现?
+MVC是Model－View－Controller的简写。"Model" 代表的是应用的业务逻辑（通过JavaBean，EJB组
+件实现）， "View" 是应用的表示面（由JSP页面产生），"Controller" 是提供应用的处理过程控制（一般
+是一个Servlet），通过这种设计模型把应用逻辑，处理过程和显示逻辑分成不同的组件实现。这些组件可以
+进行交互和重用。
+
+99、java中有几种方法可以实现一个线程？用什么关键字修饰同步方法? stop()和suspend()方法为何不推荐使用？
+有两种实现方法，分别是继承Thread类与实现Runnable接口
+用synchronized关键字修饰同步方法
+反对使用stop()，是因为它不安全。它会解除由线程获取的所有锁定，而且如果对象处于一种不连贯状态，那
+么其他线程能在那种状态下检查和修改它们。结果很难检查出真正的问题所在。suspend()方法容易发生死锁。
+调用suspend()的时候，目标线程会停下来，但却仍然持有在这之前获得的锁定。此时，其他任何线程都不能访
+问锁定的资源，除非被"挂起"的线程恢复运行。
+对任何线程来说，如果它们想恢复目标线程，同时又试图使用任何一个锁定的资源，就会造成死锁。所以不应
+该使用suspend()，而应在自己的Thread类中置入一个标志，指出线程应该活动还是挂起。若标志指出线程应
+该挂起，便用wait()命其进入等待状态。若标志指出线程应当恢复，则用一个notify()重新启动线程。
+
+100、java中有几种类型的流？JDK为每种类型的流提供了一些抽象类以供继承，请说出他们分别是哪些类？
+字节流，字符流。字节流继承于InputStream  OutputStream，字符流继承于InputStreamReader
+OutputStreamWriter。在java.io包中还有许多其他的流，主要是为了提高性能和使用方便。
+
+105、什么是java序列化，如何实现java序列化？
+       序列化就是一种用来处理对象流的机制，所谓对象流也就是将对象的内容进行流化。可以对流化后的对象进行读写操作，也可将流化后的对象传输于网络之间。序列化是为了解决在对对象流进行读写操作时所引发的问题。
+       序列化的实现：将需要被序列化的类实现Serializable接口，该接口没有需要实现的方法，implements Serializable只是为了标注该对象是可被序列化的，然后使用一个输出流(如：FileOutputStream)来构造一个ObjectOutputStream(对象流)对象，接着，使用ObjectOutputStream对象的writeObject(Object obj)方法就可以将参数为obj的对象写出(即保存其状态)，要恢复的话则用输入流。
+
+107、写clone()方法时，通常都有一行代码，是什么？
+Clone 有缺省行为，super.clone();他负责产生正确大小的空间，并逐位复制。
+
+108、在JAVA中，如何跳出当前的多重嵌套循环？
+用break; return 方法。
