@@ -312,6 +312,3 @@ OutputStreamWriter。在java.io包中还有许多其他的流，主要是为了�
 
 107、写clone()方法时，通常都有一行代码，是什么？
 Clone 有缺省行为，super.clone();他负责产生正确大小的空间，并逐位复制。
-
-108、在JAVA中，如何跳出当前的多重嵌套循环？
-用break; return 方法。
